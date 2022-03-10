@@ -1,3 +1,23 @@
+const PRICE_MIN = 0;
+const PRICE_MAX = 10;
+const ROOMS_MIN = 0;
+const ROOMS_MAX = 10;
+const GUESTS_MIN = 0;
+const GUESTS_MAX = 10;
+const TYPE_HOTEL = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const TIME_TO_IN = ['12:00', '13:00', '14:00'];
+const TIME_TO_OUT = ['12:00', '13:00', '14:00'];
+const FEATURES_IN_HOTEL = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const PHOTOS = [
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
+];
+
+const isNumber = (value) => {
+  return typeof value === 'number';
+}
+
 /**
  * Получаем случайное целое число из диапазона
  * @param {number} min - минимальное значение
@@ -6,7 +26,7 @@
  * @returns {number}
  */
 const getRandomInclusiveInt = (min, max) => {
-  if ((typeof min !== 'number' || typeof max !== 'number') || (min < 0 && max < 0)) {
+  if (!isNumber(min) || !isNumber(max) || Math.max(min, max) < 0) {
     return null;
   }
 
@@ -67,32 +87,49 @@ const getRandomInclusiveNumber = (min, max, precision) => {
 getRandomInclusiveInt();
 getRandomInclusiveNumber();
 
+/**
+ * Функция возвращет лидирующий ноль
+ * @param {number} number
+ * @returns {string}
+ */
+const leadingZero = (number) => {
+  return String(number).padStart(2, 0);
+}
 
-const createPromo = () => {
-  const typeHotel = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
-  const timeToIn = ['12:00', '13:00', '14:00'];
-  const timeToOut = ['12:00', '13:00', '14:00'];
-  const featuresInHotel = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const getRandomBoolean = () => {
+  return Math.random() >= 0.5;
+}
+
+const getRandomArrayElements = (array) => {
+  return array.filter(() => getRandomBoolean());
+}
+
+const getRandomArrayElement = (array) => {
+  return array[getRandomInclusiveInt(0, array.length - 1)];
+}
+
+
+const createOffer = (_, index) => {
   const locationLat = getRandomInclusiveNumber(35.65000, 35.70000, 5);
   const locationLng = getRandomInclusiveNumber(139.70000, 139.80000, 5);
 
   return {
     author: {
-      avatar: "img/avatars/user{{xx}}.png",
+      avatar: "img/avatars/user" + leadingZero(index + 1) + ".png",
     },
 
     offer: {
       title: 'Отель',
       address: [locationLat, locationLng],
-      price: getRandomInclusiveInt(0, 10),
-      type: typeHotel[getRandomInclusiveInt(0, typeHotel.length - 1)],
-      rooms: getRandomInclusiveInt(0, 10),
-      guests: getRandomInclusiveInt(0, 10),
-      checkin: timeToIn[getRandomInclusiveInt(0, timeToIn.length - 1)],
-      checkout: timeToOut[getRandomInclusiveInt(0, timeToOut.length - 1)],
-      features: featuresInHotel[getRandomInclusiveInt(0, featuresInHotel.length - 1)],
+      price: getRandomInclusiveInt(PRICE_MIN, PRICE_MAX),
+      type: getRandomArrayElement(TYPE_HOTEL),
+      rooms: getRandomInclusiveInt(ROOMS_MIN, ROOMS_MAX),
+      guests: getRandomInclusiveInt(GUESTS_MIN, GUESTS_MAX),
+      checkin: getRandomArrayElement(TIME_TO_IN),
+      checkout: getRandomArrayElement(TIME_TO_OUT),
+      features: getRandomArrayElements(FEATURES_IN_HOTEL),
       description: 'Пока ещё не придумал описание',
-      photos: '',
+      photos: getRandomArrayElements(PHOTOS),
     },
 
     location: {
@@ -102,8 +139,8 @@ const createPromo = () => {
   }
 }
 
-console.log(createPromo());
+console.log(createOffer());
 
-const createPromoList = Array.from({length: 10}, createPromo);
+const createOfferList = Array.from({length: 10}, createOffer);
 
-console.log(createPromoList);
+console.log(createOfferList);
