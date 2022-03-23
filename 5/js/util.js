@@ -1,6 +1,4 @@
-const isNumber = (value) => {
-  return typeof value === 'number';
-}
+const isNumber = (value) => typeof value === 'number';
 
 /**
  * Получаем случайное целое число из диапазона
@@ -68,33 +66,25 @@ const getRandomInclusiveNumber = (min, max, precision) => {
   return +((Math.random() * (max - min + 1)) + min).toFixed(precision); //Максимум и минимум включаются
 };
 
-// getRandomInclusiveInt();
-// getRandomInclusiveNumber();
+getRandomInclusiveInt();
+getRandomInclusiveNumber();
 
 /**
  * Функция возвращет лидирующий ноль
  * @param {number} number
  * @returns {string}
  */
- const leadingZero = (number) => {
-  return String(number).padStart(2, 0);
-}
+const leadingZero = (number) => String(number).padStart(2, 0);
 
 /**
  * Функция возвращает случайное значение из данных массива
  *@param {number}
  *@returns {number}
  *  */
-const getRandomBoolean = () => {
-  return Math.random() >= 0.5;
-}
+const getRandomBoolean = () => Math.random() >= 0.5;
 
-const getRandomArrayElements = (array) => {
-  return array.filter(() => getRandomBoolean());
-}
+const getRandomArrayElements = (array) => array.filter(() => getRandomBoolean());
 
-const getRandomArrayElement = (array) => {
-  return array[getRandomInclusiveInt(0, array.length - 1)];
-}
+const getRandomArrayElement = (array) => array[getRandomInclusiveInt(0, array.length - 1)];
 
-export {getRandomInclusiveInt, getRandomInclusiveNumber, getRandomArrayElements, getRandomArrayElement, getRandomBoolean, leadingZero};
+export {getRandomInclusiveInt, getRandomInclusiveNumber, getRandomArrayElements, getRandomArrayElement, leadingZero};
