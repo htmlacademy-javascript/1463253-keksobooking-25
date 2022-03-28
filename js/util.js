@@ -1,3 +1,8 @@
+/**
+ * Функиця проверяет, что пришло именно число, а не что-то иное
+ * @param {*} value - значение
+ * @returns {boolean}
+ */
 const isNumber = (value) => typeof value === 'number';
 
 /**
@@ -85,6 +90,11 @@ const getRandomBoolean = () => Math.random() >= 0.5;
 
 const getRandomArrayElements = (array) => array.filter(() => getRandomBoolean());
 
+/**
+ * Функция возвращет случайный элекмент из массива элементов
+ * @param {Array} array - массив элементов
+ * @returns {Element}
+ */
 const getRandomArrayElement = (array) => array[getRandomInclusiveInt(0, array.length - 1)];
 
 export {getRandomInclusiveInt, getRandomInclusiveNumber, getRandomArrayElements, getRandomArrayElement, leadingZero};

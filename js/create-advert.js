@@ -24,7 +24,12 @@ import {
   getRandomArrayElement,
   leadingZero
 } from './util.js';
-
+/**
+ * Функция по созданию шаблона объявления на основе имеющихся данных
+ * @param {*} _
+ * @param {*} index
+ * @returns {Object}
+ */
 const createAdvert = (_, index) => {
   const locationLat = getRandomInclusiveNumber(ADDRESS_MIN_LAT, ADDRESS_MAX_LAT, COORDINATE_PRECISION);
   const locationLng = getRandomInclusiveNumber(ADDRESS_MIN_LNG, ADDRESS_MAX_LNG, COORDINATE_PRECISION);
