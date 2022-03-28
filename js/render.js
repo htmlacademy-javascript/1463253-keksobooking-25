@@ -1,7 +1,11 @@
 import {HotelTypes} from './data.js';
 const mapContainer = document.querySelector('#map-canvas');
 const cardTemplate = document.querySelector('#card').content;
-
+/**
+ * Функуия возвращает заполненный полученными данными шаблон объявления и добавялет уже заполненный шаблон в разметку в блок с картой
+ * @param {Object} advert - объявление
+ * @returns {HTMLElement}
+ */
 const renderAdvert = (advert) => {
   const cardPopupElement = cardTemplate.cloneNode(true);
   const photoElementTemplate = cardPopupElement.querySelector('.popup__photo');
@@ -48,6 +52,10 @@ const renderAdvert = (advert) => {
   mapContainer.appendChild(cardPopupElement);
 };
 
+/**
+ * Не знаю для чего это
+ * @param {*} adverts
+ */
 const renderAdverts = (adverts) => {
   adverts.forEach((advert) => {
     renderAdvert(advert);
