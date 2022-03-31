@@ -26,3 +26,10 @@ export const HotelTypes = {
   bungalow: 'Бунгало',
   hotel: 'Отель',
 };
+
+export const capacityRestrictions = {
+  '1': ['1'],
+  '2': ['1', '2'],
+  '3': ['1', '2', '3'],
+  '100': ['0'],
+};
