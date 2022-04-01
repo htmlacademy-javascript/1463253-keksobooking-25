@@ -364,6 +364,18 @@ fieldset {
   padding-bottom: 5px;
 }
 
+.ad-form__error-text {
+  color: red;
+}
+
+.ad-form__element--invalid {
+  color: red;
+}
+
+.ad-form__element--valid {
+  color: green;
+}
+
 .ad-form__element input,
 .ad-form__element select,
 .ad-form__element textarea {
