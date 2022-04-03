@@ -31,3 +31,45 @@ roomsSelectElement.addEventListener('change', () => {
 });
 
 pristine.addValidator(capacitySelectElement, validateCapacity, 'Количество гостей не соответствует количеству комнат');
+
+
+
+const typeHousing = {
+  'bungalow': 0,
+  'flat': 1000,
+  'hotel': 3000,
+  'house': 5000,
+  'palace': 10000,
+};
+
+const type = document.querySelector('#type');
+const minPrice = document.querySelector('#price');
+
+const setPlaceholder = () => {
+  if (type.value === 'bungalow') {
+    minPrice.removeAttribute('placeholder');
+    minPrice.setAttribute('placeholder', `${typeHousing.bungalow}`);
+  }
+
+  if (type.value === 'flat') {
+    minPrice.removeAttribute('placeholder');
+    minPrice.setAttribute('placeholder', `${typeHousing.flat}`);
+  }
+
+  if (type.value === 'hotel') {
+    minPrice.removeAttribute('placeholder');
+    minPrice.setAttribute('placeholder', `${typeHousing.hotel}`);
+  }
+
+  if (type.value === 'house') {
+    minPrice.removeAttribute('placeholder');
+    minPrice.setAttribute('placeholder', `${typeHousing.house}`);
+  }
+
+  if (type.value === 'palace') {
+    minPrice.removeAttribute('placeholder');
+    minPrice.setAttribute('placeholder', `${typeHousing.palace}`);
+  }
+};
+
+type.addEventListener('change', setPlaceholder);
