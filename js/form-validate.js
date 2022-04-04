@@ -1,4 +1,5 @@
 import {capacityRestrictions} from './data.js';
+import {typeHousing} from './data.js';
 
 const form = document.querySelector('.ad-form');
 const pristineConfig = {
@@ -20,6 +21,11 @@ form.addEventListener('submit', (evt) => {
 
 const capacitySelectElement = document.querySelector('#capacity');
 const roomsSelectElement = document.querySelector('#room_number');
+const type = document.querySelector('#type');
+const minPriceElement = document.querySelector('#price');
+const timeIn = document.querySelector('#timein');
+const timeOut = document.querySelector('#timeout');
+
 const validateCapacity = (value) => {
   const roomsValue = roomsSelectElement.value;
   const roomsCapacity = capacityRestrictions[roomsValue];
@@ -30,4 +36,23 @@ roomsSelectElement.addEventListener('change', () => {
   pristine.validate();
 });
 
+const validateMinPrice = (value) => Number(value) >= Number(minPriceElement.min);
+
 pristine.addValidator(capacitySelectElement, validateCapacity, 'Количество гостей не соответствует количеству комнат');
+pristine.addValidator(minPriceElement, validateMinPrice, 'Ошибка');
+
+const setPlaceholder = () => {
+  minPriceElement.setAttribute('placeholder', typeHousing[type.value]);
+  minPriceElement.setAttribute('min', typeHousing[type.value]);
+  minPriceElement.dispatchEvent(new Event('input'));
+};
+
+type.addEventListener('change', setPlaceholder);
+
+timeIn.addEventListener('change', () => {
+  timeOut.value = timeIn.value;
+});
+
+timeOut.addEventListener('change', () => {
+  timeIn.value = timeOut.value;
+});

@@ -33,3 +33,11 @@ export const capacityRestrictions = {
   '3': ['1', '2', '3'],
   '100': ['0'],
 };
+
+export const typeHousing = {
+  'bungalow': 0,
+  'flat': 1000,
+  'hotel': 3000,
+  'house': 5000,
+  'palace': 10000,
+};
