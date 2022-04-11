@@ -9,20 +9,46 @@ const minPriceElement = document.querySelector('#price');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
 const formFieldsets = document.querySelectorAll('.ad-form__element');
-const formHeaderFieldset = document.querySelector('.ad-form-header');
 const mapFiltersContainer = document.querySelector('.map__filters');
-// Неактивное состояние страницы
+const mapFiltersSelects = document.querySelectorAll('.map__filters-container select');
+const housingFeatures = document.querySelector('#housing-features');
 
-function pageInactive () {
-  mapFiltersContainer.classList.add('ad-form--disabled');
+
+/**
+ * Функция переводит страницу в неактивное состояние
+ */
+const pageInactive = () => {
   form.classList.add('ad-form--disabled');
-  formHeaderFieldset.setAttribute('disabled', 'disabled');
-  for (let i = 0; i <= formFieldsets.length; i++) {
-    formFieldsets[i].setAttribute('disabled', 'disabled');
-  }
-}
+  formFieldsets.forEach((element) => {
+    element.setAttribute('disabled', 'disabled');
+  });
+
+  mapFiltersContainer.classList.add('ad-form--disabled');
+  mapFiltersSelects.forEach((element) => {
+    element.setAttribute('disabled', 'disabled');
+  });
+
+  housingFeatures.setAttribute('disabled', 'disabled');
+};
 
 pageInactive();
+
+/**
+ * Функция переводит страницу в активное состояние
+ */
+const pageActive = () => {
+  form.classList.remove('ad-form--disabled');
+  formFieldsets.forEach((element) => {
+    element.removeAttribute('disabled');
+  });
+
+  mapFiltersContainer.classList.remove('ad-form--disabled');
+  mapFiltersSelects.forEach((element) => {
+    element.removeAttribute('disabled');
+  });
+
+  housingFeatures.removeAttribute('disabled');
+};
 
 const pristineConfig = {
   classTo: 'ad-form__element',
@@ -72,3 +98,4 @@ timeOut.addEventListener('change', () => {
   timeIn.value = timeOut.value;
 });
 
+export {pageActive};

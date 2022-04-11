@@ -52,10 +52,6 @@ const renderAdvert = (advert) => {
   mapContainer.appendChild(cardPopupElement);
 };
 
-/**
- * Не знаю для чего это
- * @param {*} adverts
- */
 const renderAdverts = (adverts) => {
   adverts.forEach((advert) => {
     renderAdvert(advert);

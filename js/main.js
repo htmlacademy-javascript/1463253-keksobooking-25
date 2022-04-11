@@ -1,53 +1,90 @@
-import {createAdvert} from './create-advert.js';
-import {renderAdvert} from './render.js';
-import {ADVERTS_COUNT} from './data.js';
+import { createAdvert } from './create-advert.js';
+import { renderAdvert } from './render.js';
+import { ADVERTS_COUNT } from './data.js';
 import './form-validate.js';
+import { pageActive } from './form-validate.js';
 const adverts = Array.from({length: ADVERTS_COUNT}, createAdvert);
 
 renderAdvert(adverts[0]);
 
-// const typeHousing = {
-//   'bungalow': 0,
-//   'flat': 1000,
-//   'hotel': 3000,
-//   'house': 5000,
-//   'palace': 10000,
-// };
+const inputAddress = document.querySelector('#address');
+const map = L.map('map-canvas')
+  .on('load', () => {
+    pageActive();
+    inputAddress.value = 'LatLng(35.70647, 139.76335)';
+  })
 
-// const type = document.querySelector('#type');
-// const minPrice = document.querySelector('#price');
+  .setView({
+    lat: 35.70647009369907,
+    lng: 139.76335546067685,
+  }, 10);
 
-// const test = () => {
-//   if (type.value === 'bungalow') {
-//     minPrice.removeAttribute('placeholder');
-//     minPrice.setAttribute('placeholder', `${typeHousing.bungalow}`);
-//   }
+L.tileLayer(
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  },
+).addTo(map);
 
-//   if (type.value === 'flat') {
-//     minPrice.removeAttribute('placeholder');
-//     minPrice.setAttribute('placeholder', `${typeHousing.flat}`);
-//   }
+const mainPinIcon = L.icon({
+  iconUrl: '../img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
 
-//   if (type.value === 'hotel') {
-//     minPrice.removeAttribute('placeholder');
-//     minPrice.setAttribute('placeholder', `${typeHousing.hotel}`);
-//   }
+const marker = L.marker(
+  {
+    lat: 35.70647009369907,
+    lng: 139.76335546067685,
+  },
+  {
+    draggable: true,
+    icon: mainPinIcon,
+  },
+);
 
-//   if (type.value === 'house') {
-//     minPrice.removeAttribute('placeholder');
-//     minPrice.setAttribute('placeholder', `${typeHousing.house}`);
-//   }
+marker.addTo(map);
 
-//   if (type.value === 'palace') {
-//     minPrice.removeAttribute('placeholder');
-//     minPrice.setAttribute('placeholder', `${typeHousing.palace}`);
-//   }
-// };
+marker.on('moveend', (evt) => {
+  inputAddress.value = evt.target.getLatLng();
+});
 
-// const validateMinPrice = (value) => {
-//   if (value === 'bungalow') {return true;} return false;
-// };
+const icon = L.icon({
+  iconUrl: '../img/pin.svg',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
 
-// type.addEventListener('change', test);
+adverts.forEach((element) => {
+  const miniMarker = L.marker({
+    lat: element.location.lat,
+    lng: element.location.lng,
+  },
+  {
+    icon: icon,
+  },
+  );
 
-// pristine.addValidator(minPrice, validateMinPrice, 'Ошибка');
+  miniMarker.addTo(map);
+  // .bindPopup(renderAdvert(element));
+});
+
+// Слайдер
+
+const sliderElement = document.querySelector('.ad-form__slider');
+const valueElement = document.querySelector('#price');
+valueElement.value = 5000;
+
+noUiSlider.create(sliderElement, {
+  range: {
+    min: 0,
+    max: 100000,
+  },
+  start: 5000,
+  step: 5000,
+  connect: 'lower',
+});
+
+sliderElement.noUiSlider.on('update', () => {
+  valueElement.value = sliderElement.noUiSlider.get();
+});
