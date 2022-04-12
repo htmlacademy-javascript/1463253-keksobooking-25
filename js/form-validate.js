@@ -85,7 +85,7 @@ pristine.addValidator(minPriceElement, validateMinPrice, 'Ошибка');
 const setPlaceholder = () => {
   minPriceElement.setAttribute('placeholder', typeHousing[type.value]);
   minPriceElement.setAttribute('min', typeHousing[type.value]);
-  minPriceElement.dispatchEvent(new Event('input'));
+  pristine.validate();
 };
 
 type.addEventListener('change', setPlaceholder);

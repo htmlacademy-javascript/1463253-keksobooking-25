@@ -1,17 +1,18 @@
 import { createAdvert } from './create-advert.js';
 import { renderAdvert } from './render.js';
-import { ADVERTS_COUNT } from './data.js';
+import { ADVERTS_COUNT, MAP_MARKER_DEFAULT_LAT_LNG } from './data.js';
 import './form-validate.js';
 import { pageActive } from './form-validate.js';
 const adverts = Array.from({length: ADVERTS_COUNT}, createAdvert);
 
 renderAdvert(adverts[0]);
 
+
 const inputAddress = document.querySelector('#address');
 const map = L.map('map-canvas')
   .on('load', () => {
     pageActive();
-    inputAddress.value = 'LatLng(35.70647, 139.76335)';
+    inputAddress.value = MAP_MARKER_DEFAULT_LAT_LNG;
   })
 
   .setView({
@@ -46,7 +47,9 @@ const marker = L.marker(
 marker.addTo(map);
 
 marker.on('moveend', (evt) => {
-  inputAddress.value = evt.target.getLatLng();
+  const {lat, lng} = evt.target.getLatLng();
+  inputAddress.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+
 });
 
 const icon = L.icon({
@@ -55,18 +58,19 @@ const icon = L.icon({
   iconAnchor: [20, 40],
 });
 
-adverts.forEach((element) => {
+adverts.forEach((advert) => {
   const miniMarker = L.marker({
-    lat: element.location.lat,
-    lng: element.location.lng,
+    lat: advert.location.lat,
+    lng: advert.location.lng,
   },
   {
     icon: icon,
   },
   );
 
-  miniMarker.addTo(map);
-  // .bindPopup(renderAdvert(element));
+  miniMarker
+    .addTo(map)
+    .bindPopup(renderAdvert(advert));
 });
 
 // Слайдер
@@ -80,11 +84,20 @@ noUiSlider.create(sliderElement, {
     min: 0,
     max: 100000,
   },
-  start: 5000,
-  step: 5000,
+  start: 1000,
+  step: 1000,
   connect: 'lower',
+  format: {
+    to: function (value) {
+      return value;
+    },
+    from: function (value) {
+      return parseFloat(value);
+    },
+  },
 });
 
 sliderElement.noUiSlider.on('update', () => {
   valueElement.value = sliderElement.noUiSlider.get();
 });
+

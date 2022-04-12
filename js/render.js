@@ -1,5 +1,4 @@
 import {HotelTypes} from './data.js';
-const mapContainer = document.querySelector('#map-canvas');
 const cardTemplate = document.querySelector('#card').content;
 /**
  * Функуия возвращает заполненный полученными данными шаблон объявления и добавялет уже заполненный шаблон в разметку в блок с картой
@@ -49,7 +48,7 @@ const renderAdvert = (advert) => {
       featuresContainerElement.appendChild(featureElement);
     });
   }
-  mapContainer.appendChild(cardPopupElement);
+  return cardPopupElement;
 };
 
 const renderAdverts = (adverts) => {

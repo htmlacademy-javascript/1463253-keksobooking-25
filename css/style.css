@@ -353,6 +353,14 @@ fieldset {
   font-size: 14px;
 }
 
+.ad-form__element--invalid {
+  color: red;
+}
+
+.ad-form__element--valid {
+  color: green;
+}
+
 .ad-form__element--wide {
   -ms-flex-preferred-size: 50%;
       flex-basis: 50%;
@@ -365,7 +373,7 @@ fieldset {
 }
 
 .ad-form__element input,
-.ad-form__eleАment select,
+.ad-form__element select,
 .ad-form__element textarea {
   width: calc(100% - 20px);
 
