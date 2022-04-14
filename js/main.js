@@ -1,18 +1,44 @@
 import { createAdvert } from './create-advert.js';
 import { renderAdvert } from './render.js';
+import { getAdvertsData } from './api.js';
 import { ADVERTS_COUNT, MAP_MARKER_DEFAULT_LAT_LNG } from './data.js';
 import './form-validate.js';
 import { pageActive } from './form-validate.js';
 const adverts = Array.from({length: ADVERTS_COUNT}, createAdvert);
 
-renderAdvert(adverts[0]);
-
-
 const inputAddress = document.querySelector('#address');
+
+const icon = L.icon({
+  iconUrl: '../img/pin.svg',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+
 const map = L.map('map-canvas')
   .on('load', () => {
     pageActive();
     inputAddress.value = MAP_MARKER_DEFAULT_LAT_LNG;
+
+    const onSucsess = (adverts) => {
+      adverts.forEach((advert) => {
+        const miniMarker = L.marker({
+          lat: advert.location.lat,
+          lng: advert.location.lng,
+        },
+        {
+          icon: icon,
+        },
+        );
+
+        miniMarker
+          .addTo(map)
+          .bindPopup(renderAdvert(advert));
+      });
+    };
+    const onFailed = (err) => {
+      // console.log(err);
+    };
+    getAdvertsData(onSucsess, onFailed);
   })
 
   .setView({
@@ -50,27 +76,6 @@ marker.on('moveend', (evt) => {
   const {lat, lng} = evt.target.getLatLng();
   inputAddress.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
 
-});
-
-const icon = L.icon({
-  iconUrl: '../img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
-});
-
-adverts.forEach((advert) => {
-  const miniMarker = L.marker({
-    lat: advert.location.lat,
-    lng: advert.location.lng,
-  },
-  {
-    icon: icon,
-  },
-  );
-
-  miniMarker
-    .addTo(map)
-    .bindPopup(renderAdvert(advert));
 });
 
 // Слайдер
