@@ -4,7 +4,7 @@ import { getAdvertsData } from './api.js';
 import { ADVERTS_COUNT, MAP_MARKER_DEFAULT_LAT_LNG } from './data.js';
 import './form-validate.js';
 import { pageActive } from './form-validate.js';
-const adverts = Array.from({length: ADVERTS_COUNT}, createAdvert);
+// const adverts = Array.from({length: ADVERTS_COUNT}, createAdvert);
 
 const inputAddress = document.querySelector('#address');
 
@@ -14,33 +14,25 @@ const icon = L.icon({
   iconAnchor: [20, 40],
 });
 
-const map = L.map('map-canvas')
-  .on('load', () => {
-    pageActive();
-    inputAddress.value = MAP_MARKER_DEFAULT_LAT_LNG;
+const map = L.map('map-canvas');
+const markerLayer = L.layerGroup().addTo(map);
+map.on('load', () => {
+  pageActive();
+  inputAddress.value = MAP_MARKER_DEFAULT_LAT_LNG;
 
-    const onSucsess = (adverts) => {
-      adverts.forEach((advert) => {
-        const miniMarker = L.marker({
-          lat: advert.location.lat,
-          lng: advert.location.lng,
-        },
-        {
-          icon: icon,
-        },
-        );
+  const onSucsess = (adverts) => {
+    adverts.forEach((advert) => {
+      const marker2 = L.marker([advert.location.lat, advert.location.lng], {icon: icon});
+      marker2
+        .addTo(markerLayer)
+        .bindPopup(renderAdvert(advert));
+    });
+  };
 
-        miniMarker
-          .addTo(map)
-          .bindPopup(renderAdvert(advert));
-      });
-    };
-    const onFailed = (err) => {
-      // console.log(err);
-    };
-    getAdvertsData(onSucsess, onFailed);
-  })
+  const onFailed = (err) => {};
 
+  getAdvertsData(onSucsess, onFailed);
+})
   .setView({
     lat: 35.70647009369907,
     lng: 139.76335546067685,

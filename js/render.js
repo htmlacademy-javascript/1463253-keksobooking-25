@@ -5,6 +5,7 @@ const cardTemplate = document.querySelector('#card').content;
  * @param {Object} advert - объявление
  * @returns {HTMLElement}
  */
+
 const renderAdvert = (advert) => {
   const cardPopupElement = cardTemplate.cloneNode(true);
   const photoElementTemplate = cardPopupElement.querySelector('.popup__photo');
@@ -48,6 +49,7 @@ const renderAdvert = (advert) => {
       featuresContainerElement.appendChild(featureElement);
     });
   }
+
   return cardPopupElement;
 };
 
