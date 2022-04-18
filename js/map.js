@@ -10,7 +10,7 @@ const icon = L.icon({
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
-
+// Это
 const map = L.map('map-canvas');
 map.on('load', () => {
   pageActive();
