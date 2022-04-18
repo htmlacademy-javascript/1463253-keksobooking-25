@@ -1,4 +1,4 @@
-export const DATA = 'https://25.javascript.pages.academy/keksobookin/data';
+export const DATA = 'https://25.javascript.pages.academy/keksobooking/data';
 export const SERVER = 'https://25.javascript.pages.academy/keksobooking';
 export const START_PRICE = 5000;
 export const ADDRESS_MIN_LAT = 35.65;

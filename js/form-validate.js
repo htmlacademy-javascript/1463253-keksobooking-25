@@ -33,13 +33,6 @@ const initFormValidation = (form) => {
     pristine.validate();
   };
 
-  form.addEventListener('submit', (evt) => {
-    const isValid = pristine.validate();
-    if (!isValid) {
-      evt.preventDefault();
-    }
-  });
-
   roomsSelectElement.addEventListener('change', () => {
     pristine.validate();
   });
@@ -56,6 +49,8 @@ const initFormValidation = (form) => {
   timeOut.addEventListener('change', () => {
     timeIn.value = timeOut.value;
   });
+
+  return pristine;
 };
 
 export {initFormValidation};
