@@ -1,10 +1,5 @@
 import {HotelTypes} from './data.js';
 const cardTemplate = document.querySelector('#card').content;
-/**
- * Функуия возвращает заполненный полученными данными шаблон объявления и добавялет уже заполненный шаблон в разметку в блок с картой
- * @param {Object} advert - объявление
- * @returns {HTMLElement}
- */
 
 const renderAdvert = (advert) => {
   const cardPopupElement = cardTemplate.cloneNode(true);
@@ -30,7 +25,7 @@ const renderAdvert = (advert) => {
   cardPopupElement.querySelector('.popup__avatar').src = advert.author.avatar;
   cardPopupElement.querySelector('.popup__type').textContent = HotelTypes[advert.offer.type];
 
-  if (advert.offer.photos.length === 0) {
+  if (!advert.offer.photos) {
     photosContainerElement.classList.add('hidden');
   } else {
     advert.offer.photos.forEach((photo) => {
@@ -40,7 +35,7 @@ const renderAdvert = (advert) => {
     });
   }
 
-  if (advert.offer.features.length === 0) {
+  if (!advert.offer.features) {
     featuresContainerElement.classList.add('hidden');
   } else {
     advert.offer.features.forEach((feature) => {
@@ -59,4 +54,7 @@ const renderAdverts = (adverts) => {
   });
 };
 
-export {renderAdvert, renderAdverts};
+export {
+  renderAdvert,
+  renderAdverts
+};

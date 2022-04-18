@@ -1,3 +1,6 @@
+export const DATA = 'https://25.javascript.pages.academy/keksobookin/data';
+export const SERVER = 'https://25.javascript.pages.academy/keksobooking';
+export const START_PRICE = 5000;
 export const ADDRESS_MIN_LAT = 35.65;
 export const ADDRESS_MAX_LAT = 35.7;
 export const ADDRESS_MIN_LNG = 139.7;
@@ -42,4 +45,9 @@ export const typeHousing = {
   'hotel': 3000,
   'house': 5000,
   'palace': 10000,
+};
+
+export const CENTER_TOKYO = {
+  lat: 35.70647009369907,
+  lng: 139.76335546067685,
 };

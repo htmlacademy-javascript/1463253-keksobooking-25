@@ -1,13 +1,13 @@
+import { DATA, SERVER } from './data.js';
+
 const getAdvertsData = (onSucsess, onFailed) => {
-  fetch('https://25.javascript.pages.academy/keksobooking/data')
-    .then(response => {
+  fetch(DATA)
+    .then((response) => {
       if (!response.ok) {
-        throw new Error ({
-          statusText: response.statusText,
-          status: response.status,
-        });
+        throw new Error (`${response.status} ${response.statusText}`);
+      } else {
+        return response.json();
       }
-      return response.json();
     })
     .then((data) => {
       onSucsess(data);
