@@ -1,5 +1,6 @@
 import { initFormValidation } from './form-validate.js';
 import { START_PRICE } from './data.js';
+import { sendAdvertData } from './api.js';
 
 const form = document.querySelector('.ad-form');
 const formFieldsets = document.querySelectorAll('.ad-form__element');
@@ -70,6 +71,30 @@ sliderElement.noUiSlider.on('update', () => {
   valueElement.value = sliderElement.noUiSlider.get();
 });
 
-initFormValidation(form);
+const successTemplate = document.querySelector('#success').content;
+const errorTemplate = document.querySelector('#error').content;
+
+const formValidator = initFormValidation(form);
+
+const showFormSendMessage = (messageTemplate) => {
+  document.body.append(messageTemplate);
+};
+
+const onFormSendSuccess = () => {
+  showFormSendMessage(successTemplate);
+};
+const onFormSendFailed = () => {
+  showFormSendMessage(errorTemplate);
+};
+
+form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const isValid = formValidator.validate();
+  if (!isValid) {
+    return;
+  }
+
+  sendAdvertData(new FormData(form), onFormSendSuccess, onFormSendFailed);
+});
 
 export{pageActive};

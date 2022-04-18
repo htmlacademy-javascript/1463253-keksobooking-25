@@ -1,6 +1,6 @@
 import { DATA, SERVER } from './data.js';
 
-const getAdvertsData = (onSucsess, onFailed) => {
+const getAdvertsData = (onSuccess, onFailed) => {
   fetch(DATA)
     .then((response) => {
       if (!response.ok) {
@@ -10,11 +10,30 @@ const getAdvertsData = (onSucsess, onFailed) => {
       }
     })
     .then((data) => {
-      onSucsess(data);
+      onSuccess(data);
     })
     .catch((err) => {
       onFailed(err);
     });
 };
 
-export {getAdvertsData};
+const sendAdvertData = (formData, onSuccess, onFailed) => {
+  fetch(SERVER, {
+    method: 'POST',
+    body: formData,
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Не удалось получить данные');
+      }
+      onSuccess();
+    })
+    .catch((err) => {
+      onFailed(err);
+    });
+};
+
+export {
+  getAdvertsData,
+  sendAdvertData
+};
