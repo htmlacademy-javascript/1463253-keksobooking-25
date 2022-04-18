@@ -22,7 +22,7 @@ map.on('load', () => {
     });
   };
 
-  const onFailed = (err) => {
+  const onFailed = () => {
     const loadingErrorElement = document.createElement('div');
     loadingErrorElement.textContent = 'Не удалось загрузить данные!';
     document.body.append(loadingErrorElement);
@@ -36,7 +36,6 @@ map.on('load', () => {
     loadingErrorElement.style.right = '10px';
     loadingErrorElement.style.borderRadius = '5px';
     loadingErrorElement.style.fontFamily = 'sans-serif';
-
   };
 
   getAdvertsData(onSucsess, onFailed);
